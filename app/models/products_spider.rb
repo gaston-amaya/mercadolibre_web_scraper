@@ -13,9 +13,17 @@ class ProductsSpider < Kimurai::Base
         item = {}
         
   
-        item[:product_name] = product.xpath("//h2[@class='ui-search-item__title ui-search-item__group__element']")&.text&.squish
-        item[:price] = product.xpath("//span[@class='price-tag-fraction']")&.text&.squish&.delete('^0-9').to_i 
-        item[:shipping] = product.xpath("//p[@class='ui-search-item__shipping ui-search-item__shipping--free']")&.text&.squish
+        item[:product_name] = product.css('h2.ui-search-item__title')&.text&.squish
+        item[:price] = product.css('span.price-tag-fraction')&.text&.squish&.delete('^0-9').to_f
+        item[:link] = product.css('a.href ui-search-link')&.text&.squish
+        shipping = product.css('p.ui-search-item__shipping').css('span.ui-search-item__promise__text--last')
+
+        if shipping.length > 15
+          item[:shipping] = product.css('span.ui-search-item__promise__text--last')&.text&.squish
+        else
+          item[:shipping] = product.css('p.ui-search-item__shipping')&.text&.squish
+        end
+        
         
   
         
