@@ -8,7 +8,7 @@ class ProductsController < ApplicationController
 
   # scrape
   def scrape
-    url = "https://computacion.mercadolibre.com.ar/componentes-pc-placas-video/msi/cordoba/placa-de-video_NoIndex_True#applied_filter_id%3Dstate%26applied_filter_name%3DUbicaci%C3%B3n%26applied_filter_order%3D13%26applied_value_id%3DTUxBUENPUmFkZGIw%26applied_value_name%3DC%C3%B3rdoba%26applied_value_order%3D11%26applied_value_results%3D120%26is_custom%3Dfalse%26view_more_flag%3Dtrue"
+    url = "https://computacion.mercadolibre.com.ar/componentes-pc-placas-video/msi/placa-de-video_NoIndex_True#unapplied_filter_id%3Dstate%26unapplied_filter_name%3DUbicaci%C3%B3n%26unapplied_value_id%3DTUxBUENPUmFkZGIw%26unapplied_value_name%3DC%C3%B3rdoba%26unapplied_autoselect%3Dfalse"
     response = ProductsSpider.process(url)
     if response[:status] == :completed && response[:error].nil?
       flash.now[:notice] = "Successfully scraped url"
